@@ -1,0 +1,103 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Light va Dark rejim uchun yaxshiroq ranglar */
+  color-scheme: light dark;
+  --text-color: rgba(255, 255, 255, 0.87);
+  --background-color: #242424;
+  --button-bg: #1a1a1a;
+  --button-hover: #646cff;
+  --link-color: #646cff;
+  --link-hover: #535bf2;
+
+  color: var(--text-color);
+  background-color: var(--background-color);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Linklar */
+a {
+  font-weight: 500;
+  color: var(--link-color);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--link-hover);
+}
+
+/* Body */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; /* Flex yo‘nalish to‘g‘rilandi */
+  align-items: center;
+  justify-content: center;
+  padding: 1rem; /* Mobil uchun padding qo‘shildi */
+  text-align: center; /* Matnni markazga olish */
+}
+
+/* Asosiy sarlavha */
+h1 {
+  font-size: 2.5em; /* Kichik ekranlar uchun font-size moslashtirildi */
+  line-height: 1.2;
+}
+
+/* Tugmalar */
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.8em 1.4em; /* Tugma kattaligini biroz oshirish */
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--button-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+button:hover {
+  background-color: var(--button-hover);
+  border-color: var(--button-hover);
+  color: #fff;
+}
+button:focus,
+button:focus-visible {
+  outline: 2px solid var(--button-hover);
+}
+
+/* Mobil qurilmalar uchun media query */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em; /* Mobil ekranda kichikroq sarlavha */
+  }
+
+  body {
+    padding: 1.5rem; /* Yon tomondan bo‘sh joy qoldirish */
+  }
+
+  button {
+    width: 100%; /* Tugmalar ekran bo‘ylab joylashishi uchun */
+    max-width: 300px; /* Juda katta bo‘lib ketmasligi uchun */
+  }
+}
+
+/* Light rejim (oq fon) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --text-color: #213547;
+    --background-color: #ffffff;
+    --button-bg: #f9f9f9;
+    --button-hover: #747bff;
+    --link-color: #747bff;
+    --link-hover: #535bf2;
+  }
+}
+

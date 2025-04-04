@@ -1,0 +1,53 @@
+/* Login sahifasi konteyneri */
+.container {
+  max-width: 420px;
+  margin: 40px auto;
+}
+
+/* Xatolik xabari */
+.error-message {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Inputlar va tugmalar */
+.text-input,
+.password-input {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* "Sign in" tugmasi */
+.login-button {
+  width: 100%;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: darkblue;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+/* "Sign Up" havolasi */
+.signup-link {
+  text-align: center;
+  display: block;
+  margin-top: 15px;
+  color: #007bff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
