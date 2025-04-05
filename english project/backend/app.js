@@ -38,6 +38,14 @@ app.use(express.json());
 app.use('/api/post', postRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/admin', adminRouter); 
+app.post('/api/auth/logout', (req, res) => {
+  const { refreshToken } = req.body;
+  if (!refreshToken) return res.status(400).send("No refresh token provided");
+
+  // Refresh tokenni o‘chirish (masalan, Redis yoki DB dan)
+  tokenStore = tokenStore.filter(token => token !== refreshToken); // misol uchun
+  return res.status(200).send({ message: "Logged out successfully" });
+}); 
 
 
 const upload = multer({ dest: 'uploads/' });
