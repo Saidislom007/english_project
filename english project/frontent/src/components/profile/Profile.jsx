@@ -7,27 +7,26 @@ const UserCardImage = () => {
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const storedUserId = localStorage.getItem("userId");
+
+        // Agar userId yo‘q bo‘lsa -> login page
         if (!storedUserId) {
-          setIsAuthenticated(false);
-          setLoading(false);
+          navigate("/login");
           return;
         }
 
         const response = await axios.get(
-          `http://192.168.1.45:5050/api/auth/get-profile/${storedUserId}`,
+          `http://192.168.1.4:5050/api/auth/get-profile/${storedUserId}`,
           { withCredentials: true }
         );
 
         if (response.data) {
           setUser(response.data);
-          setIsAuthenticated(true);
 
           const userSkills = response.data.skills || {};
           setStats([
@@ -36,43 +35,39 @@ const UserCardImage = () => {
             { value: userSkills.listening || 0, label: "Listening" },
             { value: userSkills.reading || 0, label: "Reading" },
           ]);
+        } else {
+          // Agar foydalanuvchi topilmasa
+          navigate("/login");
         }
       } catch (error) {
-        console.error("Authentication check failed:", error);
-        setIsAuthenticated(false);
+        console.error("Authentication failed:", error);
+        navigate("/login"); // Xatolik bo‘lsa ham login page
       } finally {
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, []);
+  }, [navigate]);
+
   const handleLogout = async () => {
-    try {
-      const refreshToken = localStorage.getItem("refreshToken");
-      if (!refreshToken) {
-        console.error("No refresh token found!");
-        return;
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (refreshToken) {
+      try {
+        await axios.post(
+          "http://192.168.1.4:5050/api/auth/logout",
+          { refreshToken },
+          { withCredentials: true }
+        );
+      } catch (err) {
+        console.error("Server logout failed:", err.message);
       }
-      
-  
-      const response = await axios.post(
-        "http://192.168.1.45:5050/api/auth/logout",
-        { refreshToken }, // So'rovni bodyda yuborish
-        { withCredentials: true, headers: { "Content-Type": "application/json" } }
-      );
-  
-      console.log("Logout successful:", response.data);
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("userId");
-  
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout failed:", error.response?.data || error);
     }
+
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userId");
+    navigate("/login");
   };
-  
-  
 
   if (loading) {
     return (
@@ -99,7 +94,7 @@ const UserCardImage = () => {
         mt={-30}
       />
       <Text ta="center" fz="lg" fw={500} mt="sm">
-        {user ? user.fullname : "Loading..."}
+        {user ? user.fullname : "No user"}
       </Text>
 
       <Group mt="md" justify="center" gap={30}>
